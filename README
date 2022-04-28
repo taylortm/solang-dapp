@@ -1,0 +1,33 @@
+#Solang-dapp
+
+solang-dapp is built from: 
+https://github.com/hyperledger-labs/solang
+https://github.com/solana-labs/wallet-adapter/tree/master/packages/starter/react-ui-starter
+https://github.com/rzmay/solana-solidity.js - fork of "@solana/solidity" which exposes the transaction object. 
+
+# Setup env
+cp .env.example .env
+
+# Build the bundle.so and Contract.abi with Solang.
+npm run build
+
+# Deploy the program to solana
+npm run deploy 
+
+# Setup env variables
+Copy the Contract address, Storage address, Payer address, and b58 encoded Payer secret into .env REACT_ variables.
+
+# Test the Contract via node client
+node run src/scripts/deposit.js
+
+- it should fail with "instruction spent from the balance of an account it does not own"
+- if you remove { value: 100} it will work. you will see getMyTotal() return a higher value each run.
+
+# Test the Dapp. (you must load your Payer address into Phantom and switch to devnet and then connect your wallet). Also we must load the ABI as a json
+cd contracts/ 
+cp Contract.abi Contract.json
+npm run start
+
+- it should fail with "instruction spent from the balance of an account it does not own"
+- if you remove { value: 100} from components/Transfer.tsx it will work
+
